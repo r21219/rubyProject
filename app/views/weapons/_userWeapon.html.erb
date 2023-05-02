@@ -1,0 +1,32 @@
+<div class="container mx-auto px-4">
+  <div class="flex items-center justify-between flex-wrap mb-6">
+    <h1 class="text-3xl font-bold">Weapons</h1>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <% @weapons.each do |weapon| %>
+      <div class="card">
+        <%if(weapon.image.attached?)%>
+          <%= image_tag weapon.image, class: "card-img-top" %>
+        <% end %>
+        <div class="card-body">
+          <h5 class="card-title"><strong>Name:</strong><%= link_to weapon.name, weapon %></h5>
+          <p class="card-text"><strong>Description:</strong><%= weapon.description %></p>
+          <p class="card-text font-semibold text-lg"><%= number_to_currency(weapon.price) %>,-</p>
+          <div class="card-actions">
+            <%= link_to 'Add to cart', new_weapon_path, class: button_class(theme: "success")%>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="text-center mt-4">
+    <%= page_entries_info @weapons %>
+  </div>
+
+  <div class="text-center mt-4">
+    <%= link_to 'Previous page', weapons_path(page: @weapons.prev_page), class: "btn btn-secondary" if @weapons.prev_page %>
+    <%= link_to 'Next page', weapons_path(page: @weapons.next_page), class: "btn btn-secondary" if @weapons.next_page %>
+  </div>
+</div>

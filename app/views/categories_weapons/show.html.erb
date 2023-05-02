@@ -1,0 +1,21 @@
+<div class="max-w-3xl mx-auto px-4">
+  <div class="flex items-center justify-between">
+    <h1 class="flex-1 font-bold text-3xl">Categories_weapon</h1>
+
+    <div class="flex-wrap lg:flex items-center lg:space-x-3">
+      <%= link_to 'All Categories_weapons', categories_weapons_path, class: button_class(theme: "transparent") %>
+      <%= link_to 'Edit', edit_categories_weapon_path(@categories_weapon), class: button_class(theme:"primary") %>
+    </div>
+  </div>
+
+  <ul class="text-slate-700">
+      <li>
+        <p class="font-semibold">Category:</p>
+        <p><%= @categories_weapon.category %></p>
+      </li>
+      <li>
+        <p class="font-semibold">Weapon:</p>
+        <p><%= @categories_weapon.weapon %></p>
+      </li>
+  </ul>
+</div>

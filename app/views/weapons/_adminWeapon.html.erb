@@ -1,0 +1,52 @@
+<div class="container mx-auto px-4">
+  <div class="flex items-center justify-between flex-wrap mb-6">
+    <h1 class="text-3xl font-bold">Weapons</h1>
+
+    <%= link_to 'Add New Weapon', new_weapon_path, class: button_class(theme: "primary") if can?(:create, Weapon)%>
+  </div>
+
+  <table class="table-auto border-collapse border-slate-400 w-full">
+    <thead class="bg-slate-50 dark:bg-slate-700">
+      <tr>
+
+          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Name</th>
+
+                  <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Description</th>
+                  <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Price</th>
+                  <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Image</th>
+                <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">...</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @weapons.each do |weapon| %>
+      <%= content_tag :tr, id: dom_id(weapon), class: dom_class(weapon) do %>
+
+        <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= link_to weapon.name, weapon %></td>
+
+              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= weapon.description %></td>
+              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= weapon.price %></td>
+            <%if(weapon.image.attached?)%>
+            <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= image_tag weapon.image %></td>
+            <%end%>
+            <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+        <%= link_to 'Show', weapon, class: "text-neutral-700 underline" if can?(:read, Weapon)%>
+        <%= link_to 'Edit', edit_weapon_path(weapon), class: "text-indigo-700 underline" if can?(:update, Weapon)%>
+        <%= link_to 'Destroy', weapon, method: :delete, class: "text-red-700 underline", data: { "turbo-method": :delete, "turbo-confirm": "Are you sure?" } if can?(:destroy, Weapon)%>
+        <%if(weapon.image.attached?)%>
+        <%= link_to 'Delete image', destroy_image_weapon_path(weapon), method: :delete, class: "text-red-700 underline", data: { "turbo-method": :delete, "turbo-confirm": "Are you sure?" } if can?(:destroy, Weapon)%>
+        <%end%>
+      </td>
+      <% end %>
+      <% end %>
+    </tbody>
+  </table>
+      <div class= "text-center">
+  <%= page_entries_info @weapons %>
+  </div>
+    <div class= "text-center">
+      <%= link_to 'Previous page', weapons_path(page: @weapons.prev_page) if @weapons.prev_page %>
+      <%= link_to 'Next page', weapons_path(page: @weapons.next_page) if @weapons.next_page %>
+    </div>
+</div>
+</div>

@@ -1,0 +1,49 @@
+
+<%= simple_form_for(@weapon) do |f| %>
+<% if weapon.errors.any? %>
+<div id="error_explanation" class="bg-red-50 p-6 rounded text-red-800">
+  <h2 class="text-lg font-semibold mb-3"><%= pluralize(weapon.errors.count, "error") %> prohibited this weapon from being saved:</h2>
+
+  <ul class="list-disc leading-relaxed">
+    <% weapon.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<br />
+<% end %>
+
+  <div class="mb-6">
+                      <%= f.label :name, class: label_class %>
+        <%= f.text_field :name, class: input_class %>
+            </div>
+  <div class="mb-6">
+                      <%= f.label :description, class: label_class %>
+        <%= f.text_area :description, class: input_class %>
+            </div>
+  <div class="mb-6">
+                      <%= f.label :price, class: label_class %>
+        <%= f.number_field :price, class: input_class %>
+            </div>
+  <div class="mb-6">
+                      <%= f.label :image, class: label_class %>
+        <%= f.file_field :image, class: label_class%>
+            </div>
+              <div class="mb-6">
+    <strong>Categories:</strong>
+    <% Category.all.each do |category| %>
+      <div class="flex items-center mt-2">
+        <%= check_box_tag 'weapon[category_ids][]', category.id, @weapon.categories.include?(category), id: dom_id(category), class: 'mr-2' %>
+        <%= label_tag dom_id(category), category.name %>
+      </div>
+    <% end %>
+  </div>
+
+<%= f.submit class: button_class(theme: 'primary') %>
+
+<% if weapon.persisted? %>
+<%= link_to "Cancel", weapon, class: "text-neutral-700 underline inline-block ml-3" %>
+<% else %>
+<%= link_to "Cancel", weapons_path, class:  "text-neutral-700 underline inline-block ml-3" %>
+<% end %>
+<% end %>

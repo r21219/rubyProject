@@ -1,0 +1,64 @@
+
+
+
+<div class="container mx-auto px-4">
+  <div class="flex items-center justify-between flex-wrap mb-6">
+    <h1 class="text-3xl font-bold">Users</h1>
+  </div>
+  <%= form_tag users_path, method: :get do %>
+  <%= hidden_field_tag :admin, true %>
+  <%= submit_tag "Show only Admin Users" %>
+<% end %>
+  <%= form_tag users_path, method: :get do %>
+  <%= hidden_field_tag :admin, false %>
+  <%= submit_tag "Show all Users" %>
+<% end %>
+  <table class="table-auto border-collapse border-slate-400 w-full">
+    <thead class="bg-slate-50 dark:bg-slate-700">
+      <tr>
+
+          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+            <%= sort_link @q, :name, 'Name' %>
+            </th>
+          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+            <%= sort_link @q, :surname, 'Surname' %>
+            </th>
+          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+            <%= sort_link @q, :email, 'Email' %>
+            </th>
+          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+            <%= sort_link @q, :admin, 'Admin' %>
+            </th>
+          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+            ...
+            </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @users.each do |user| %>
+      <%= content_tag :tr, id: dom_id(user), class: dom_class(user) do %>
+
+        <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= link_to user.name, user %></td>
+
+              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= user.surname %></td>
+              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= user.email %></td>
+              <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= user.admin %></td>
+            <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+        <%= link_to 'Show', user, class: "text-neutral-700 underline" if can?(:read, User)%>
+        <%= link_to 'Edit', edit_user_path(user), class: "text-indigo-700 underline" if can?(:update, User)%>
+        <%= link_to 'Destroy', user, method: :delete, class: "text-red-700 underline", data: { "turbo-method": :delete, "turbo-confirm": "Are you sure?" } if can?(:destroy, User)%>
+      </td>
+      <% end %>
+      <% end %>
+    </tbody>
+  </table>
+    <div class= "text-center">
+  <%= page_entries_info @users %>
+  </div>
+    <div class= "text-center">
+      <%= link_to 'Previous page', users_path(page: @users.prev_page) if @users.prev_page %>
+      <%= link_to 'Next page', users_path(page: @users.next_page) if @users.next_page %>
+    </div>
+</div>
+</div>

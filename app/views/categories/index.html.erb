@@ -1,0 +1,44 @@
+
+
+
+<div class="container mx-auto px-4">
+  <div class="flex items-center justify-between flex-wrap mb-6">
+    <h1 class="text-3xl font-bold">Categories</h1>
+
+    <%= link_to 'Add New Category', new_category_path, class: button_class(theme: "primary") %>
+  </div>
+
+  <table class="table-auto border-collapse border-slate-400 w-full">
+    <thead class="bg-slate-50 dark:bg-slate-700">
+      <tr>
+
+          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">Name</th>
+
+                <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">...</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @categories.each do |category| %>
+      <%= content_tag :tr, id: dom_id(category), class: dom_class(category) do %>
+
+        <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"><%= link_to category.name, category %></td>
+
+            <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+        <%= link_to 'Show', category, class: "text-neutral-700 underline" %>
+        <%= link_to 'Edit', edit_category_path(category), class: "text-indigo-700 underline" %>
+        <%= link_to 'Destroy', category, method: :delete, class: "text-red-700 underline", data: { "turbo-method": :delete, "turbo-confirm": "Are you sure?" } %>
+      </td>
+      <% end %>
+      <% end %>
+    </tbody>
+  </table>
+      <div class= "text-center">
+  <%= page_entries_info @categories %>
+  </div>
+    <div class= "text-center">
+      <%= link_to 'Previous page', categories_path(page: @categories.prev_page) if @categories.prev_page %>
+      <%= link_to 'Next page', categories_path(page: @categories.next_page) if @categories.next_page %>
+    </div>
+</div>
+</div>

@@ -1,0 +1,5 @@
+<% if current_user && current_user.admin? %>
+  <%= render 'adminWeapon'%>
+<%else%>
+  <%= render 'userWeapon'%>
+<%end%>

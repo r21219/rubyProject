@@ -1,0 +1,31 @@
+
+<%= simple_form_for(@order) do |f| %>
+<% if order.errors.any? %>
+<div id="error_explanation" class="bg-red-50 p-6 rounded text-red-800">
+  <h2 class="text-lg font-semibold mb-3"><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+  <ul class="list-disc leading-relaxed">
+    <% order.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<br />
+<% end %>
+
+  <div class="mb-6">
+                      <%= f.label :total_price, class: label_class %>
+        <%= f.number_field :total_price, class: input_class %>
+            </div>
+  <div class="mb-6">
+                      <%= f.association :user %>
+            </div>
+
+<%= f.submit class: button_class(theme: 'primary') %>
+
+<% if order.persisted? %>
+<%= link_to "Cancel", order, class: "text-neutral-700 underline inline-block ml-3" %>
+<% else %>
+<%= link_to "Cancel", orders_path, class:  "text-neutral-700 underline inline-block ml-3" %>
+<% end %>
+<% end %>

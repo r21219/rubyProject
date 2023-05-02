@@ -1,0 +1,28 @@
+
+<%= simple_form_for(@category) do |f| %>
+<% if category.errors.any? %>
+<div id="error_explanation" class="bg-red-50 p-6 rounded text-red-800">
+  <h2 class="text-lg font-semibold mb-3"><%= pluralize(category.errors.count, "error") %> prohibited this category from being saved:</h2>
+
+  <ul class="list-disc leading-relaxed">
+    <% category.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<br />
+<% end %>
+
+  <div class="mb-6">
+                      <%= f.label :name, class: label_class %>
+        <%= f.text_field :name, class: input_class %>
+            </div>
+
+<%= f.submit class: button_class(theme: 'primary') %>
+
+<% if category.persisted? %>
+<%= link_to "Cancel", category, class: "text-neutral-700 underline inline-block ml-3" %>
+<% else %>
+<%= link_to "Cancel", categories_path, class:  "text-neutral-700 underline inline-block ml-3" %>
+<% end %>
+<% end %>

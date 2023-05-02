@@ -1,0 +1,30 @@
+
+<%= simple_form_for(@categories_weapon) do |f| %>
+<% if categories_weapon.errors.any? %>
+<div id="error_explanation" class="bg-red-50 p-6 rounded text-red-800">
+  <h2 class="text-lg font-semibold mb-3"><%= pluralize(categories_weapon.errors.count, "error") %> prohibited this categories_weapon from being saved:</h2>
+
+  <ul class="list-disc leading-relaxed">
+    <% categories_weapon.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<br />
+<% end %>
+
+  <div class="mb-6">
+                      <%= f.association :category %>
+            </div>
+  <div class="mb-6">
+                      <%= f.association :weapon %>
+            </div>
+
+<%= f.submit class: button_class(theme: 'primary') %>
+
+<% if categories_weapon.persisted? %>
+<%= link_to "Cancel", categories_weapon, class: "text-neutral-700 underline inline-block ml-3" %>
+<% else %>
+<%= link_to "Cancel", categories_weapons_path, class:  "text-neutral-700 underline inline-block ml-3" %>
+<% end %>
+<% end %>
