@@ -10,4 +10,7 @@ class Weapon < ApplicationRecord
   validates :price, presence:true ,numericality: { greater_than_or_equal_to: 50 }
   validates :description, length: {minimum:0, maximum:100}
 
+  def to_s
+    "#{name}"
+  end
 end

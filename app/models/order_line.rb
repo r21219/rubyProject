@@ -8,6 +8,6 @@ class OrderLine < ApplicationRecord
   after_create :update_order_total_price
 
   def update_order_total_price
-    order.update(total_price: order.order_lines.sum('count * weapons.price'))
+    order.update(total_price: order.order_lines.joins(:weapon).sum('count * weapons.price'))
   end
 end

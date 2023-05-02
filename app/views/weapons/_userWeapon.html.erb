@@ -6,15 +6,21 @@
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
     <% @weapons.each do |weapon| %>
       <div class="card">
-        <%if(weapon.image.attached?)%>
-          <%= image_tag weapon.image, class: "card-img-top" %>
-        <% end %>
+        <%#if(weapon.image.attached?)%>
+          <%#= image_tag weapon.image, class: "card-img-top" %>
+        <%# end %>
         <div class="card-body">
           <h5 class="card-title"><strong>Name:</strong><%= link_to weapon.name, weapon %></h5>
           <p class="card-text"><strong>Description:</strong><%= weapon.description %></p>
           <p class="card-text font-semibold text-lg"><%= number_to_currency(weapon.price) %>,-</p>
           <div class="card-actions">
-            <%= link_to 'Add to cart', new_weapon_path, class: button_class(theme: "success")%>
+            <%= simple_form_for(@order_line = OrderLine.new) do |f| %>
+            <%= f.hidden_field :weapon_id, value: weapon.id %>
+            <%= f.hidden_field :order_id, value: @current_order.id %>
+            <%= f.label 'Count:', class: label_class %>
+            <%= f.number_field :count, value: 1, min: 1, class: "form-control" %>
+            <%= f.submit 'Add to cart', class: button_class(theme: 'success') %>
+          <% end %>
           </div>
         </div>
       </div>

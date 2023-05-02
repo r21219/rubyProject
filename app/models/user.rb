@@ -13,4 +13,8 @@ class User < ApplicationRecord
   def admin?
     admin
   end
+
+  def to_s
+    "#{name} #{surname}"
+  end
 end

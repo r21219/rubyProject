@@ -9,6 +9,7 @@ class Order < ApplicationRecord
     .joins(:user)
     .group('users.id')
   }
+  enum status: { new: 0, processing: 1, shipped: 2, delivered: 3 }, _prefix: true
 
   private
 
@@ -19,5 +20,7 @@ class Order < ApplicationRecord
     end
     self.total_price = total_price
   end
-
+  def to_s
+    "#{id}"
+  end
 end

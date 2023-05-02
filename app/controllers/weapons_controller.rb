@@ -4,6 +4,7 @@ class WeaponsController < ApplicationController
   # GET /weapons or /weapons.json
   def index
     @q = Weapon.ransack(params[:q])
+    @current_order = current_order
     @weapons = @q.result(distinct: true).priced_above(600).page(params[:page]).per(10)
   end
 

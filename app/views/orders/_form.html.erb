@@ -20,7 +20,9 @@
   <div class="mb-6">
                       <%= f.association :user %>
             </div>
-
+    <div class="mb-6">
+      <%= f.input :status, collection: Order.statuses.map { |(name, id)| [name.humanize.capitalize, name] }, class: input_class %>
+    </div>
 <%= f.submit class: button_class(theme: 'primary') %>
 
 <% if order.persisted? %>
